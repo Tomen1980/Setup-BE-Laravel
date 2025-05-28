@@ -31,6 +31,7 @@ This is a simple application that allows users to create, read, update and delet
 3. if you want to stop the application run `docker-compose down`
 4. if you want to see the running image you run `docker ps`
 5. when you change the code and if it is not updated in the browser run `docker-compose exec app php artisan config:clear` and `docker-compose exec app php artisan cache:clear`
+6. visit `docs/api`
 
 ## Running Application
 
