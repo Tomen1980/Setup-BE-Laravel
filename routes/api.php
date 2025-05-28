@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cache;
 
-
-Route::resource('/user', UserController::class);
+Route::prefix('v1')->group(function(){
+    Route::resource('/user', UserController::class);
+});
 
 Route::get('/get-cache', function () {
     return Cache::get('users', 'default');

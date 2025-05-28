@@ -12,12 +12,14 @@ trait ApiResponse
      * @param  int  $code
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function success($data = null, string $message = null, int $code = 200)
+    protected function success($data = null, string $message = null, int $code = 200, $errors = null)
     {
         return response()->json([
             'status' => 'SUCCESS',
             'message' => $message,
-            'data' => $data
+            'data' => $data,
+            'code' => $code,
+            'errors' => $errors
         ], $code);
     }
 

@@ -30,9 +30,14 @@ COPY --from=composer_stage /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
 COPY . /app
+COPY .env.example .env
 
-RUN composer install
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# RUN composer install
 
 EXPOSE 8000
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["php", "artisan", "octane:start", "--server=frankenphp", "--host=0.0.0.0", "--port=8000", "--workers=8", "--max-requests=8" ]

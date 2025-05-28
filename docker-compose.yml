@@ -4,39 +4,38 @@ services:
   app:
     build:
       context: .
-    container_name: franken_laravel
+    container_name: be_kelolacermat
     restart: unless-stopped
-    ports:
-      - "8000:8000"
+    env_file:
+      - .env
     volumes:
       - .:/app
-      - ./vendor:/app/vendor
-      - ./storage:/app/storage
-      - ./.env:/app/.env
+    ports:
+      - "8000:8000"
     environment:
-      - DB_HOST=mysql
+      - DB_HOST=mysql_kc
       - DB_PORT=3306
-      - DB_DATABASE=laravel_franken
+      - DB_DATABASE=db_kelolacermat
       - DB_USERNAME=root
       - DB_PASSWORD=root
-      - REDIS_HOST=redis
+      - REDIS_HOST=redis_kc
       - REDIS_PORT=6379
       - CACHE_STORE=redis
       - CACHE_DRIVER=redis
       - REDIS_PASSWORD=S3cretJohnDev1!
     depends_on:
-      - mysql
-      - redis
+      - mysql_kc
+      - redis_kc
     networks:
       - laravel_network
 
-  mysql:
+  mysql_kc:
     image: mysql:8.0
-    container_name: mysql
+    container_name: mysql_kc
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel_franken
+      MYSQL_DATABASE: db_kelolacermat
       MYSQL_USER: laravel_user
       MYSQL_PASSWORD: secret
     ports:
@@ -46,9 +45,9 @@ services:
     networks:
       - laravel_network
 
-  redis:
+  redis_kc:
     image: redis
-    container_name: redis
+    container_name: redis_kc
     command: ["redis-server", "--requirepass", "S3cretJohnDev1!"]
     restart: unless-stopped
     ports:
@@ -58,18 +57,18 @@ services:
     networks:
       - laravel_network
 
-  phpmyadmin:
+  phpmyadmin_kc:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin_kc
     restart: unless-stopped
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: mysql_kc
       PMA_USER: root
       PMA_PASSWORD: root
     ports:
       - "8080:80"
     depends_on:
-      - mysql
+      - mysql_kc
     networks:
       - laravel_network
 
